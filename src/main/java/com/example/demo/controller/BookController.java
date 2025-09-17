@@ -12,13 +12,18 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
     private final BookService service;
+    private int listCallCount = 0;
 
     public BookController(BookService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<Book> list() { return service.findAll(); }
+    public List<Book> list() { 
+        listCallCount++;
+        System.out.println("Harshil: List method called " + listCallCount + " times");
+        return service.findAll(); 
+    }
 
     @GetMapping("/{id}")
     public Book get(@PathVariable Long id) { return service.findById(id); }
